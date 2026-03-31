@@ -47,7 +47,7 @@
     .card-shadow { box-shadow: 0 6px 18px rgba(230,80,0,0.10); }
     .disclaimer { font-size:.85rem; color:#5a2000; background:#ffe5d0; padding:10px; border-radius:6px; }
     .chart-height { height: 200px; }
-    .pie-chart-height { height: 260px; }
+    .pie-chart-height { height: 300px; }
     h3, h5, h6 { color:#c22800; }
     .list-group-item { background:#fff; border-color:#ffd0b0; color:#3a1a00; }
 
@@ -266,6 +266,7 @@ function computeMetrics() {
   };
 }
 function currency(n){ return n.toLocaleString('en-US',{style:'currency', currency:'USD'}); }
+
 function renderPortfolio() {
   const tbody = document.getElementById('portfolioBody');
   tbody.innerHTML = '';
@@ -305,20 +306,25 @@ function drawCharts(){
     data: { labels, datasets: [{ data: values, backgroundColor: ['#e63000','#ff6a00','#ff9a3c','#ffb347','#cc2200','#ff4500','#ff7733','#ffa500'] }]},
     options: {
       plugins: {
-        legend: { position: 'right' },
+        legend: { display: false },
         datalabels: {
-          color: '#fff',
+          anchor: 'end',
+          align: 'end',
+          offset: 6,
+          color: '#3a1a00',
           font: { weight: 'bold', size: 11 },
           formatter: (value, ctx) => {
             const pct = ((value / total) * 100).toFixed(1);
             return ctx.chart.data.labels[ctx.dataIndex] + '\n' + pct + '%';
-          }
+          },
+          textAlign: 'center'
         }
-      }
+      },
+      layout: { padding: 30 }
     }
   });
 
-  //simulated 7-day performance trend, replace with live market data API in production
+  //simulated 7-day performance trend
   const days = Array.from({length:7}, (_,i)=> i);
   const base = computeMetrics().totalValue;
   const series = days.map((d,i)=> base * (1 + (Math.sin(i)/50 + (i-3)/200)));
