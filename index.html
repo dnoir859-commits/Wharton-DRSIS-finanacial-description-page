@@ -47,7 +47,7 @@
     .card-shadow { box-shadow: 0 6px 18px rgba(230,80,0,0.10); }
     .disclaimer { font-size:.85rem; color:#5a2000; background:#ffe5d0; padding:10px; border-radius:6px; }
     .chart-height { height: 200px; }
-    .pie-chart-height { height: 340px; }
+    .pie-chart-height { height: 370px; }
     h3, h5, h6 { color:#c22800; }
     .list-group-item { background:#fff; border-color:#ffd0b0; color:#3a1a00; }
 
@@ -85,7 +85,7 @@
         </div>
       </div>
       <div class="col-lg-5 d-none d-lg-block">
-        <div class="card card-shadow p-3">
+        <div class="card card-shadow p-1">
           <canvas id="pieChart" class="pie-chart-height"></canvas>
         </div>
       </div>
@@ -303,16 +303,16 @@ function drawCharts(){
   Chart.register(ChartDataLabels);
   new Chart(pieCtx, {
     type: 'pie',
-    data: { labels, datasets: [{ data: values, backgroundColor: ['#e63000','#ff6a00','#b8860b','#8b4513','#ff4500','#cc2200','#ff9a3c','#ffa500'] }]},
+    data: {labels, datasets: [{data: values, backgroundColor: ['#e63000','#ff6a00','#b8860b','#8b4513','#ff4500','#cc2200','#ff9a3c','#ffa500']}]},
     options: {
       plugins: {
-        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } },
+        legend: {position: 'bottom', labels: {boxWidth: 12, padding: 10, font: {size: 11}}},
         datalabels: {
-          anchor:'end',
-          align:'end',
-          offset:6,
-          color:'#3a1a00',
-          font: { weight: 'bold', size: 11 },
+          anchor: 'end',
+          align: 'end',
+          offset: 6,
+          color: '#3a1a00',
+          font: {weight: 'bold', size: 11},
           formatter: (value, ctx) => {
             const pct = ((value / total) * 100).toFixed(1);
             return ctx.chart.data.labels[ctx.dataIndex] + '\n' + pct + '%';
@@ -320,7 +320,7 @@ function drawCharts(){
           textAlign: 'center'
         }
       },
-      layout: { padding: { top: 30, bottom: 10, left: 55, right: 55 } }
+      layout: {padding: {top: 30, bottom: 40, left: 55, right: 55}}
     }
   });
 
@@ -331,8 +331,8 @@ function drawCharts(){
   const lineCtx = document.getElementById('lineChart').getContext('2d');
   new Chart(lineCtx, {
     type: 'line',
-    data: { labels: ['-6d','-5d','-4d','-3d','-2d','-1d','Today'], datasets: [{ label:'Portfolio value', data: series, fill:false, tension:0.3 }]},
-    options: { plugins:{ legend:{ display:false }, datalabels:{ display:false } }, scales:{ y:{ ticks:{ callback: v => '$'+(v/1000).toFixed(0)+'k' } } } }
+    data: {labels: ['-6d','-5d','-4d','-3d','-2d','-1d','Today'], datasets: [{label:'Portfolio value', data: series, fill:false, tension:0.3}]},
+    options: {plugins:{legend:{display:false}, datalabels:{display:false}}, scales:{y:{ticks:{callback: v => '$'+(v/1000).toFixed(0)+'k'}}}}
   });
 }
 function escapeHtml(s){ return (''+s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
